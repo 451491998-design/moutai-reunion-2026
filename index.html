@@ -86,7 +86,8 @@ body{
 .btn-ghost{background:rgba(255,248,239,.06); border:1px solid rgba(233,189,123,.6); color:var(--gold-bright)}
 .btn-ghost:hover{background:rgba(233,189,123,.15)}
 .scroll-hint{
-  position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2;
+  /* 注意：不能用 left:50%+translateX(-50%) 居中——下面的 rise 动画会覆盖 transform 导致偏移 */
+  position:absolute; bottom:26px; left:0; right:0; margin-inline:auto; width:max-content; z-index:2;
   display:grid; justify-items:center; gap:8px; color:#e6c690; font-size:12px;
   opacity:0; animation:rise 1s 1.4s ease forwards;
 }
