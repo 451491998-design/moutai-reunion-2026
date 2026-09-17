@@ -190,16 +190,19 @@ button[type=submit]:disabled{opacity:.55; cursor:not-allowed; transform:none; bo
   width:52px; height:52px; margin:0 auto 14px; border-radius:50%;
   border:1px solid var(--red); display:grid; place-items:center; font-size:24px;
 }
-/* ---------- 微信引导弹层 ---------- */
-.wx-modal{position:fixed; inset:0; z-index:300; display:none; align-items:center; justify-content:center; padding:24px; background:rgba(24,0,3,.74); backdrop-filter:blur(5px)}
-.wx-modal.show{display:flex}
-.wx-box{position:relative; width:100%; max-width:360px; background:linear-gradient(180deg,#fffdf7,#f8eeda); border-radius:10px; padding:30px 24px 24px; text-align:center; box-shadow:0 24px 60px rgba(20,0,2,.5); animation:pop .35s ease}
-.wx-box h4{margin:0 0 12px; font-size:19px; letter-spacing:.14em; color:#57040a}
-.wx-box p{margin:0 0 14px; font-size:13.5px; line-height:1.95; color:#6b5138; text-align:left}
-.wx-box b{color:#9d0812}
-.wx-link{margin-bottom:16px; padding:10px 12px; font-size:12px; word-break:break-all; color:#9d0812; background:#fff; border:1px dashed rgba(157,8,18,.45); border-radius:6px; font-variant-numeric:tabular-nums}
-.wx-box .btn-primary{width:100%; min-height:46px; font-size:15px}
-.wx-close{position:absolute; top:6px; right:12px; border:0; background:none; font-size:24px; line-height:1; color:#a08b6d; cursor:pointer}
+/* ---------- 微信轻提示 ---------- */
+.wx-toast{
+  position:fixed; left:50%; bottom:34px; z-index:300;
+  transform:translateX(-50%) translateY(16px);
+  max-width:min(88vw,430px); width:max-content;
+  background:rgba(28,1,4,.92); color:#f3dfbe;
+  font-size:13px; line-height:1.85; text-align:left;
+  padding:12px 18px; border:1px solid rgba(233,189,123,.35); border-radius:8px;
+  box-shadow:0 12px 32px rgba(20,0,2,.45);
+  opacity:0; pointer-events:none; transition:opacity .3s ease, transform .3s ease;
+}
+.wx-toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+.wx-toast b{color:#f0cf96}
 @keyframes pop{from{opacity:0; transform:scale(.96)} to{opacity:1; transform:scale(1)}}
 .form-note{font-size:12px; color:#a08874; margin-top:14px; line-height:1.8}
 
@@ -330,15 +333,7 @@ button[type=submit]:disabled{opacity:.55; cursor:not-allowed; transform:none; bo
 
 <script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
 <script src="cloud.js"></script>
-<div class="wx-modal" id="wxGuide" role="dialog" aria-modal="true" aria-hidden="true">
-  <div class="wx-box">
-    <button class="wx-close" id="wxClose" type="button" aria-label="关闭">&times;</button>
-    <h4>请在浏览器中登记</h4>
-    <p>微信内暂不支持打开登记页。请点右上角「···」选择<b>「在浏览器打开」</b>，或复制下方链接，粘贴到手机浏览器（Safari / Chrome）打开后登记席位。</p>
-    <div class="wx-link">https://moutai-reunion-2026.app.workbuddy.host/</div>
-    <button class="btn-primary" id="wxCopy" type="button">复制链接</button>
-  </div>
-</div>
+<div class="wx-toast" id="wxGuide" role="status" aria-live="polite"></div>
 
 <script>
 /* ---------- 顶栏滚动态 ---------- */
@@ -426,22 +421,28 @@ function setBusy(on){
 const APP_URL = 'https://moutai-reunion-2026.app.workbuddy.host/';
 const ON_APP = /(^|\.)app\.workbuddy\.host$/i.test(location.hostname);
 const IS_WECHAT = /MicroMessenger/i.test(navigator.userAgent);
-const wxModal = document.getElementById('wxGuide');
-function showWxGuide(){ wxModal.classList.add('show'); wxModal.setAttribute('aria-hidden','false'); }
-function closeWxGuide(){ wxModal.classList.remove('show'); wxModal.setAttribute('aria-hidden','true'); }
-wxModal.addEventListener('click', e => { if (e.target === wxModal) closeWxGuide(); });
-document.getElementById('wxClose').addEventListener('click', closeWxGuide);
-document.getElementById('wxCopy').addEventListener('click', async () => {
-  const btn = document.getElementById('wxCopy');
-  try { await navigator.clipboard.writeText(APP_URL); }
+const wxToast = document.getElementById('wxGuide');
+let wxToastTimer = null;
+async function copyAppUrl(){
+  try { await navigator.clipboard.writeText(APP_URL); return true; }
   catch(_) {
-    const ta = document.createElement('textarea');
-    ta.value = APP_URL; document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); ta.remove();
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = APP_URL; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      const ok = document.execCommand('copy'); ta.remove(); return ok;
+    } catch(__) { return false; }
   }
-  btn.textContent = '已复制，去浏览器粘贴打开';
-  setTimeout(() => { btn.textContent = '复制链接'; }, 2200);
-});
+}
+async function showWxGuide(){
+  const copied = await copyAppUrl();
+  wxToast.innerHTML = copied
+    ? '<b>登记链接已复制</b>，请打开手机浏览器（Safari / Chrome）粘贴访问；也可点右上角「···」选「在浏览器打开」'
+    : '微信内暂不支持登记，请点右上角「···」选择<b>「在浏览器打开」</b>完成登记';
+  wxToast.classList.add('show');
+  clearTimeout(wxToastTimer);
+  wxToastTimer = setTimeout(() => wxToast.classList.remove('show'), 5000);
+}
 if (IS_WECHAT || !ON_APP){
   document.querySelectorAll('.topbar .cta, .hero-actions .btn-primary').forEach(a => {
     a.addEventListener('click', e => { e.preventDefault(); showWxGuide(); });
