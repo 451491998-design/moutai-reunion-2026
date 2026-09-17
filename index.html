@@ -87,10 +87,20 @@ body{
 .btn-ghost:hover{background:rgba(233,189,123,.15)}
 .scroll-hint{
   position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2;
-  display:grid; justify-items:center; gap:8px; color:#e6c690; font-size:12px; letter-spacing:.4em; text-indent:.4em;
+  display:grid; justify-items:center; gap:10px; color:#e6c690; font-size:12px;
+  letter-spacing:.34em; text-indent:.34em; text-decoration:none; cursor:pointer;
   opacity:0; animation:rise 1s 1.4s ease forwards;
 }
-.scroll-hint::after{content:""; width:1px; height:42px; background:linear-gradient(var(--gold),transparent); animation:drop 1.8s ease-in-out infinite}
+.scroll-hint .chev{
+  width:13px; height:13px; border-right:2px solid var(--gold); border-bottom:2px solid var(--gold);
+  transform:rotate(45deg); animation:bounceDown 1.7s ease-in-out infinite;
+}
+.scroll-hint:hover{color:#f0cf96}
+.scroll-hint:hover .chev{border-color:#f0cf96; animation-play-state:paused}
+@keyframes bounceDown{
+  0%,100%{transform:rotate(45deg) translate(-2px,-2px); opacity:.45}
+  50%{transform:rotate(45deg) translate(4px,4px); opacity:1}
+}
 #stars{position:absolute; inset:0; z-index:1; pointer-events:none}
 @keyframes rise{from{opacity:0; transform:translateY(26px)} to{opacity:1; transform:translateY(0)}}
 @keyframes drop{0%{transform:scaleY(0); transform-origin:top} 55%{transform:scaleY(1); transform-origin:top} 56%{transform-origin:bottom} 100%{transform:scaleY(0); transform-origin:bottom}}
@@ -203,6 +213,8 @@ button[type=submit]:disabled{opacity:.55; cursor:not-allowed; transform:none; bo
 }
 .wx-toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
 .wx-toast b{color:#f0cf96}
+.wx-inline{margin:0 0 16px; padding:10px 14px; font-size:12.5px; line-height:1.8; color:#8a4b1e; background:#fdf3e3; border:1px solid rgba(157,8,18,.28); border-left:3px solid #9d0812; border-radius:4px}
+.wx-inline b{color:#9d0812}
 @keyframes pop{from{opacity:0; transform:scale(.96)} to{opacity:1; transform:scale(1)}}
 .form-note{font-size:12px; color:#a08874; margin-top:14px; line-height:1.8}
 
@@ -248,11 +260,13 @@ button[type=submit]:disabled{opacity:.55; cursor:not-allowed; transform:none; bo
       <div class="cell"><b id="cd-s">--</b><span>秒</span></div>
     </div>
     <div class="hero-actions">
-      <a class="btn-primary" href="#register">立即登记席位</a>
-      <a class="btn-ghost" href="#invite">了解详情</a>
+      <a class="btn-primary" href="#register">往下滑动登记</a>
     </div>
   </div>
-  <div class="scroll-hint">向下滚动</div>
+  <a class="scroll-hint" href="#register" aria-label="往下滑动查看邀请详情并登记">
+    <span class="chev" aria-hidden="true"></span>
+    <span>下滑查看邀请详情</span>
+  </a>
 </header>
 
 <section class="bridge" id="invite">
@@ -287,6 +301,7 @@ button[type=submit]:disabled{opacity:.55; cursor:not-allowed; transform:none; bo
     <div class="form" id="register">
       <h3>登记邀请信息</h3>
       <p class="hint">请留下您的信息，主办方将据此确认席位，并向您发送正式邀请函。</p>
+      <p class="wx-inline" id="wxInline" hidden>请使用手机浏览器打开正式登记链接完成登记。</p>
       <div class="form-msg" id="formMsg"></div>
       <form id="inviteForm" novalidate>
         <div class="row">
@@ -437,18 +452,25 @@ async function copyAppUrl(){
 async function showWxGuide(){
   const copied = await copyAppUrl();
   wxToast.innerHTML = copied
-    ? '<b>登记链接已复制</b>，请打开手机浏览器（Safari / Chrome）粘贴访问；也可点右上角「···」选「在浏览器打开」'
-    : '微信内暂不支持登记，请点右上角「···」选择<b>「在浏览器打开」</b>完成登记';
+    ? (IS_WECHAT
+        ? '<b>登记链接已复制</b>，请打开手机浏览器（Safari / Chrome）粘贴访问；也可点右上角「···」选「在浏览器打开」'
+        : '<b>登记链接已复制</b>，请在浏览器地址栏粘贴访问正式登记页')
+    : '请使用手机浏览器打开正式登记链接完成登记';
   wxToast.classList.add('show');
   clearTimeout(wxToastTimer);
   wxToastTimer = setTimeout(() => wxToast.classList.remove('show'), 5000);
 }
 if (IS_WECHAT || !ON_APP){
-  document.querySelectorAll('.topbar .cta, .hero-actions .btn-primary').forEach(a => {
-    a.addEventListener('click', e => { e.preventDefault(); showWxGuide(); });
-  });
+  /* 微信/外部域名下不拦截点击，正常下滑到表单；仅在真正提交时给出轻提示 */
   const adminLink = document.querySelector('a[href$="admin.html"]');
   if (adminLink) adminLink.href = APP_URL + 'admin.html';
+  const inlineNote = document.getElementById('wxInline');
+  if (inlineNote){
+    inlineNote.hidden = false;
+    inlineNote.innerHTML = IS_WECHAT
+      ? '微信内暂不支持直接提交。请点右上角「···」选<b>「在浏览器打开」</b>，或点下方提交后复制链接，粘贴到手机浏览器完成登记。'
+      : '当前为邀请展示页。登记请前往正式链接：<a href="' + APP_URL + '" style="color:#9d0812;word-break:break-all">' + APP_URL + '</a>';
+  }
 }
 
 form.addEventListener('submit', async e => {
