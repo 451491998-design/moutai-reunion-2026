@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>双节遇良辰 · 茅台叙团圆</title>
+<meta name="description" content="茅台中秋国庆双节主题活动邀请函登记页" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%239d0812'/%3E%3Cpath d='M14 38c11-16 25-16 36 0' fill='none' stroke='%23e9bd7b' stroke-width='4'/%3E%3Ccircle cx='32' cy='27' r='7' fill='%23e9bd7b'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --red:#9d0812; --red-bright:#b50812; --deep:#57040a; --darker:#3c0206;
+  --gold:#e9bd7b; --gold-bright:#f5d9a8; --gold-dim:#c99a5b;
+  --cream:#fff8ef; --ink:#3a1110;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--darker); color:var(--cream);
+  font-family:"Noto Serif SC","Songti SC","STSong",serif;
+  min-height:100vh; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--red); color:var(--gold-bright)}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--darker)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--red),var(--gold-dim)); border-radius:5px}
+
+/* ---------- 顶部导航 ---------- */
+.topbar{
+  position:fixed; inset:0 0 auto 0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px clamp(18px,4vw,48px);
+  background:rgba(60,2,6,0); backdrop-filter:blur(0px);
+  transition:background .4s, backdrop-filter .4s, padding .4s;
+}
+.topbar.scrolled{background:rgba(60,2,6,.82); backdrop-filter:blur(10px); padding-top:10px; padding-bottom:10px; box-shadow:0 1px 0 rgba(233,189,123,.18)}
+.brand{display:flex; align-items:center; gap:12px; font-size:15px; letter-spacing:.22em; color:var(--gold-bright)}
+.brand .mark{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;color:var(--gold);font-size:16px}
+.topbar .cta{
+  font-family:inherit; font-size:13px; letter-spacing:.18em; cursor:pointer;
+  color:var(--gold-bright); background:transparent; border:1px solid rgba(233,189,123,.55);
+  padding:9px 22px; border-radius:2px; transition:.3s;
+}
+.topbar .cta:hover{background:var(--gold); color:var(--deep); border-color:var(--gold)}
+
+/* ---------- 首屏 ---------- */
+.hero{
+  position:relative; min-height:100svh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  background:url("hero.jpg") center/cover no-repeat, #57040a;
+  padding:110px 20px 90px; overflow:hidden;
+}
+.hero::before{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(60,2,6,.55) 0%, rgba(60,2,6,.08) 30%, rgba(60,2,6,.12) 62%, var(--darker) 100%);
+  pointer-events:none;
+}
+.hero-inner{position:relative; z-index:2; max-width:900px}
+.eyebrow{
+  font-size:clamp(13px,1.5vw,16px); letter-spacing:.55em; text-indent:.55em;
+  color:var(--gold-bright); opacity:0; animation:rise 1.1s .15s ease forwards;
+}
+.hero h1{
+  margin:26px 0 0; font-family:"Ma Shan Zheng","Noto Serif SC","Songti SC",serif;
+  font-weight:400; line-height:1.18;
+  font-size:clamp(44px,8.5vw,104px);
+  background:linear-gradient(180deg,#fbe7c2 8%, #e9bd7b 48%, #b98544 96%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 4px 22px rgba(0,0,0,.45));
+  opacity:0; animation:rise 1.1s .35s ease forwards;
+}
+.hero h1 .dot{font-size:.55em; vertical-align:.18em; margin:0 .18em; color:#f0cf96; -webkit-text-fill-color:#f0cf96}
+.hero .sub{
+  margin:22px 0 0; font-size:clamp(16px,2.4vw,24px); letter-spacing:.5em; text-indent:.5em;
+  color:var(--cream); opacity:0; animation:rise 1.1s .55s ease forwards;
+}
+.hero .sub em{font-style:normal; color:var(--gold-bright)}
+.countdown{
+  margin:44px auto 0; display:inline-flex; gap:clamp(10px,2.5vw,22px); align-items:center;
+  padding:14px clamp(16px,3vw,30px);
+  border:1px solid rgba(233,189,123,.4); border-radius:3px;
+  background:rgba(60,2,6,.35); backdrop-filter:blur(6px);
+  opacity:0; animation:rise 1.1s .75s ease forwards;
+}
+.countdown .cell{display:grid; gap:4px; min-width:52px}
+.countdown b{font-size:clamp(22px,3.4vw,32px); font-weight:700; color:var(--gold-bright); line-height:1; font-variant-numeric:tabular-nums}
+.countdown span{font-size:11px; letter-spacing:.3em; text-indent:.3em; color:#d9b98c}
+.countdown .sep{color:var(--gold-dim); font-size:20px; transform:translateY(-8px)}
+.hero-actions{margin-top:40px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; opacity:0; animation:rise 1.1s .95s ease forwards}
+.btn-primary,.btn-ghost{
+  font-family:inherit; cursor:pointer; border-radius:2px; min-height:52px; padding:0 34px;
+  font-size:16px; letter-spacing:.2em; text-indent:.2em; transition:.3s; text-decoration:none;
+  display:inline-flex; align-items:center;
+}
+.btn-primary{border:0; background:linear-gradient(135deg,#c40913,#8d060f); color:#ffe9c4; font-weight:600; box-shadow:0 10px 30px rgba(157,8,18,.45)}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 36px rgba(197,8,18,.55); background:linear-gradient(135deg,#d70b16,#9d0812)}
+.btn-ghost{background:rgba(255,248,239,.06); border:1px solid rgba(233,189,123,.6); color:var(--gold-bright)}
+.btn-ghost:hover{background:rgba(233,189,123,.15)}
+.scroll-hint{
+  position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2;
+  display:grid; justify-items:center; gap:8px; color:#e6c690; font-size:12px; letter-spacing:.4em; text-indent:.4em;
+  opacity:0; animation:rise 1s 1.4s ease forwards;
+}
+.scroll-hint::after{content:""; width:1px; height:42px; background:linear-gradient(var(--gold),transparent); animation:drop 1.8s ease-in-out infinite}
+#stars{position:absolute; inset:0; z-index:1; pointer-events:none}
+@keyframes rise{from{opacity:0; transform:translateY(26px)} to{opacity:1; transform:translateY(0)}}
+@keyframes drop{0%{transform:scaleY(0); transform-origin:top} 55%{transform:scaleY(1); transform-origin:top} 56%{transform-origin:bottom} 100%{transform:scaleY(0); transform-origin:bottom}}
+
+/* ---------- 意境过渡 ---------- */
+.bridge{position:relative; padding:clamp(70px,10vw,130px) 20px; text-align:center; overflow:hidden}
+.bridge::before{
+  content:"酿"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  font-family:"Ma Shan Zheng","Noto Serif SC",serif; font-size:clamp(300px,52vw,640px);
+  color:rgba(157,8,18,.10); line-height:1; pointer-events:none; user-select:none;
+}
+.bridge .verses{position:relative; display:inline-grid; gap:18px}
+.bridge .verse{
+  writing-mode:vertical-rl; margin:auto; font-size:clamp(17px,2.4vw,22px);
+  letter-spacing:.42em; color:#e8cf9e; height:clamp(200px,30vw,300px);
+}
+.reveal{opacity:0; transform:translateY(34px); transition:opacity .9s ease, transform .9s ease}
+.reveal.visible{opacity:1; transform:none}
+.reveal.d1{transition-delay:.12s}.reveal.d2{transition-delay:.24s}.reveal.d3{transition-delay:.36s}
+
+/* ---------- 主体卡片 ---------- */
+.content{max-width:1200px; margin:0 auto; padding:0 20px 72px}
+.card{
+  background:linear-gradient(150deg,#fffaf2 0%,#f8ecd6 55%,#f2e0c2 100%);
+  color:var(--ink); border:1px solid rgba(233,189,123,.8);
+  box-shadow:0 24px 70px rgba(0,0,0,.4), 0 0 0 6px rgba(157,8,18,.16);
+  border-radius:4px; padding:clamp(26px,4.5vw,54px);
+  display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:clamp(30px,4vw,50px);
+  position:relative;
+}
+.card::before,.card::after{
+  content:""; position:absolute; width:26px; height:26px; pointer-events:none;
+  border:1px solid #b5854d;
+}
+.card::before{top:10px; left:10px; border-right:0; border-bottom:0}
+.card::after{bottom:10px; right:10px; border-left:0; border-top:0}
+.intro{border-right:1px solid #dfc7a7; padding-right:clamp(24px,3vw,40px)}
+.seal{
+  width:46px; height:46px; border:1px solid var(--red); border-radius:50%;
+  display:grid; place-items:center; color:var(--red); font-size:21px; margin-bottom:18px;
+  font-family:"Ma Shan Zheng",serif;
+}
+.intro h2{font-size:clamp(26px,3.2vw,40px); margin:0 0 14px; color:var(--red); letter-spacing:.1em; font-weight:900}
+.intro>p{font-size:16px; line-height:2; margin:0 0 26px; color:#4a201b}
+.details{display:grid; gap:13px; font-size:15px}
+.detail{display:flex; gap:14px; line-height:1.7}
+.label{color:#9c6f42; flex:0 0 76px; font-weight:600}
+.detail span:last-child{min-width:0; overflow-wrap:anywhere}
+.flow{margin-top:26px; border-top:1px dashed #d8bd97; padding-top:22px}
+.flow-title{font-size:13px; letter-spacing:.3em; color:#9c6f42; margin:0 0 16px}
+.flow ol{list-style:none; margin:0; padding:0; display:grid; gap:12px; counter-reset:step}
+.flow li{display:flex; align-items:center; gap:12px; font-size:14.5px; color:#5a2c22}
+.flow li::before{
+  counter-increment:step; content:counter(step,cjk-ideographic);
+  width:26px; height:26px; flex:0 0 26px; border-radius:50%;
+  background:rgba(157,8,18,.09); border:1px solid rgba(157,8,18,.35);
+  display:grid; place-items:center; font-size:12px; color:var(--red);
+}
+
+/* ---------- 表单 ---------- */
+.form h3{margin:0 0 8px; font-size:clamp(23px,2.6vw,28px); color:var(--red); letter-spacing:.08em; font-weight:900}
+.form .hint{font-size:14px; color:#806657; margin:0 0 22px; line-height:1.7}
+form{display:grid; gap:16px}
+.row{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px}
+label{font-size:14px; color:#6d4436; display:grid; gap:7px; font-weight:600}
+.intro,.form,.row,label,input,select{min-width:0}
+input,select,textarea{
+  width:100%; min-height:48px; border:1px solid #d8b991; border-radius:2px;
+  padding:13px 14px; background:#fffdf9; color:var(--ink);
+  font-family:inherit; font-size:16px; line-height:1.5; outline:none; transition:.25s;
+}
+textarea{resize:vertical; min-height:84px}
+input:focus,select:focus,textarea:focus{border-color:var(--red); box-shadow:0 0 0 3px rgba(157,8,18,.12); background:#fff}
+input.invalid{border-color:#c0392b; box-shadow:0 0 0 3px rgba(192,57,43,.12)}
+.check{display:flex; align-items:flex-start; gap:9px; font-size:13.5px; color:#806657; line-height:1.6; font-weight:400}
+.check input{flex:0 0 18px; width:18px; min-height:18px; margin-top:2px; accent-color:var(--red)}
+button[type=submit]{
+  border:0; background:linear-gradient(135deg,#b40913,#8d060f); color:#ffe9c4;
+  padding:15px 20px; border-radius:2px; font-family:inherit; font-weight:700; font-size:16px;
+  min-height:52px; letter-spacing:.3em; text-indent:.3em; cursor:pointer; transition:.3s;
+  box-shadow:0 10px 26px rgba(157,8,18,.3);
+}
+button[type=submit]:hover{background:linear-gradient(135deg,#c40b16,#9d0812); transform:translateY(-2px); box-shadow:0 14px 32px rgba(157,8,18,.4)}
+button[type=submit]:disabled{opacity:.55; cursor:not-allowed; transform:none; box-shadow:none}
+.success{
+  display:none; padding:26px 24px; border:1px solid #d4a76e; background:#fff6e5;
+  color:var(--red); font-size:17px; line-height:1.9; text-align:center;
+}
+.success.show{display:block; animation:pop .5s ease}
+.success .tick{
+  width:52px; height:52px; margin:0 auto 14px; border-radius:50%;
+  border:1px solid var(--red); display:grid; place-items:center; font-size:24px;
+}
+@keyframes pop{from{opacity:0; transform:scale(.96)} to{opacity:1; transform:scale(1)}}
+.form-note{font-size:12px; color:#a08874; margin-top:14px; line-height:1.8}
+
+/* ---------- 页脚 ---------- */
+.footer{
+  text-align:center; color:#e3bb85; font-size:13px; padding:8px 20px 34px; letter-spacing:.14em;
+}
+.footer .rule{width:min(420px,60%); height:1px; margin:0 auto 22px; background:linear-gradient(90deg,transparent,rgba(233,189,123,.6),transparent)}
+.footer small{display:block; margin-top:10px; color:#a97f52; letter-spacing:.08em; font-size:11.5px}
+
+/* ---------- 响应式 ---------- */
+@media(max-width:1000px){
+  .card{grid-template-columns:1fr; gap:30px}
+  .intro{border-right:0; border-bottom:1px solid #dfc7a7; padding:0 0 26px}
+}
+@media(max-width:600px){
+  .content{padding:0 14px 48px}
+  .card{padding:26px 20px}
+  .row{grid-template-columns:1fr}
+  .detail{gap:10px}
+  .brand span.txt{display:none}
+  .countdown .cell{min-width:44px}
+  .bridge .verse{height:170px}
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar" id="topbar">
+  <div class="brand"><span class="mark">酿</span><span class="txt">茅台 · 双节雅集</span></div>
+  <a class="cta" href="#register">登记席位</a>
+</nav>
+
+<header class="hero">
+  <canvas id="stars"></canvas>
+  <div class="hero-inner">
+    <div class="eyebrow">贵州茅台 · 中秋国庆双节主题活动</div>
+    <h1>双节遇良辰<span class="dot">·</span>茅台叙团圆</h1>
+    <p class="sub">月圆迎盛世 <em>·</em> 佳酿贺家国</p>
+    <div class="countdown" id="countdown" aria-label="距离中秋倒计时">
+      <div class="cell"><b id="cd-d">--</b><span>天</span></div><div class="sep">:</div>
+      <div class="cell"><b id="cd-h">--</b><span>时</span></div><div class="sep">:</div>
+      <div class="cell"><b id="cd-m">--</b><span>分</span></div><div class="sep">:</div>
+      <div class="cell"><b id="cd-s">--</b><span>秒</span></div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#register">立即登记席位</a>
+      <a class="btn-ghost" href="#invite">了解详情</a>
+    </div>
+  </div>
+  <div class="scroll-hint">向下滚动</div>
+</header>
+
+<section class="bridge" id="invite">
+  <div class="verses">
+    <p class="verse reveal d1">一壶佳酿敬团圆</p>
+    <p class="verse reveal d2">千里婵娟共此时</p>
+  </div>
+</section>
+
+<main class="content">
+  <section class="card reveal">
+    <div class="intro">
+      <div class="seal">酿</div>
+      <h2>诚邀莅临</h2>
+      <p>一轮明月，映照团圆心意；一杯茅台，共叙美好时光。诚邀您出席本次中秋主题活动，与我们共品佳酿，共赏团圆。</p>
+      <div class="details">
+        <div class="detail"><span class="label">活动时间</span><span>以正式邀请函为准</span></div>
+        <div class="detail"><span class="label">活动地点</span><span>以正式邀请函为准</span></div>
+        <div class="detail"><span class="label">着装建议</span><span>商务正装 / 中国风雅致着装</span></div>
+      </div>
+      <div class="flow">
+        <p class="flow-title">当晚流程 · 敬候雅临</p>
+        <ol>
+          <li>迎宾签到 · 闻香入席</li>
+          <li>品鉴雅集 · 佳酿共赏</li>
+          <li>团圆晚宴 · 把盏言欢</li>
+          <li>望月祈福 · 礼成道别</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="form" id="register">
+      <h3>登记邀请信息</h3>
+      <p class="hint">请留下您的信息，主办方将据此确认席位，并向您发送正式邀请函。</p>
+      <form id="inviteForm" novalidate>
+        <div class="row">
+          <label>姓名
+            <input name="name" required placeholder="请输入您的姓名" />
+          </label>
+          <label>手机号码
+            <input name="phone" type="tel" required pattern="1[0-9]{10}" placeholder="请输入11位手机号" />
+          </label>
+        </div>
+        <div class="row">
+          <label>公司 / 单位
+            <input name="company" placeholder="请输入公司或单位名称" />
+          </label>
+          <label>出席人数
+            <select name="guests">
+              <option>1位</option><option>2位</option><option>3位</option><option>4位及以上</option>
+            </select>
+          </label>
+        </div>
+        <label>备注
+          <textarea name="note" placeholder="如有饮食或出行需求，请在此备注"></textarea>
+        </label>
+        <label class="check">
+          <input type="checkbox" required id="agree" />
+          <span>我同意主办方使用以上信息进行活动席位确认与行前通知。</span>
+        </label>
+        <button type="submit">提交登记</button>
+      </form>
+      <div class="success" id="success">
+        <div class="tick">✓</div>
+        登记信息已提交。<br/>感谢您的回复，我们会尽快与您联系确认席位。
+      </div>
+      <p class="form-note">* 本页为活动邀请演示页，信息仅保存在您的浏览器本地，不会被上传。</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="rule"></div>
+  贵州茅台 · 以酒会友 · 共叙团圆
+  <small>本页面为中秋主题活动邀请演示页，非茅台官方页面</small>
+</footer>
+
+<script>
+/* ---------- 顶栏滚动态 ---------- */
+const topbar = document.getElementById('topbar');
+addEventListener('scroll', () => {
+  topbar.classList.toggle('scrolled', scrollY > 60);
+}, {passive:true});
+
+/* ---------- 倒计时（2026 中秋：9月25日） ---------- */
+const target = new Date('2026-09-25T00:00:00+08:00').getTime();
+function tick(){
+  const diff = target - Date.now();
+  if (diff <= 0){
+    document.getElementById('countdown').innerHTML =
+      '<div class="cell" style="min-width:auto"><b style="font-size:clamp(20px,3vw,28px)">双节良辰 · 如约而至</b></div>';
+    return;
+  }
+  const s = Math.floor(diff/1000);
+  document.getElementById('cd-d').textContent = String(Math.floor(s/86400)).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(Math.floor(s%86400/3600)).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(Math.floor(s%3600/60)).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(s%60).padStart(2,'0');
+  requestAnimationFrame(() => setTimeout(tick, 250));
+}
+tick();
+
+/* ---------- 滚动显现 ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+}), {threshold:.18});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- 首屏金色光点 ---------- */
+const cvs = document.getElementById('stars'), ctx = cvs.getContext('2d');
+let W, H, pts = [];
+function resize(){
+  W = cvs.width = cvs.offsetWidth * devicePixelRatio;
+  H = cvs.height = cvs.offsetHeight * devicePixelRatio;
+  pts = Array.from({length: innerWidth < 700 ? 36 : 70}, () => ({
+    x: Math.random()*W, y: Math.random()*H,
+    r: (Math.random()*1.8 + .5) * devicePixelRatio,
+    vy: (Math.random()*.35 + .08) * devicePixelRatio,
+    vx: (Math.random()-.5) * .18 * devicePixelRatio,
+    a: Math.random()*.55 + .2, ph: Math.random()*Math.PI*2
+  }));
+}
+addEventListener('resize', resize); resize();
+(function draw(t){
+  ctx.clearRect(0,0,W,H);
+  for (const p of pts){
+    p.y -= p.vy; p.x += p.vx;
+    if (p.y < -10){ p.y = H + 10; p.x = Math.random()*W; }
+    if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
+    const tw = p.a * (0.6 + 0.4*Math.sin(t/700 + p.ph));
+    const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3);
+    g.addColorStop(0, 'rgba(245,217,168,' + tw + ')');
+    g.addColorStop(1, 'rgba(245,217,168,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r*3,0,7); ctx.fill();
+  }
+  requestAnimationFrame(draw);
+})(0);
+
+/* ---------- 表单 ---------- */
+const form = document.getElementById('inviteForm');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  let ok = true;
+  const name = form.name, phone = form.phone, agree = document.getElementById('agree');
+  [name, phone].forEach(i => i.classList.remove('invalid'));
+  if (!name.value.trim()){ name.classList.add('invalid'); ok = false; }
+  if (!/^1[0-9]{10}$/.test(phone.value.trim())){ phone.classList.add('invalid'); ok = false; }
+  if (!agree.checked){ ok = false; agree.focus(); }
+  if (!ok) return;
+  try {
+    const list = JSON.parse(localStorage.getItem('moutai_rsvps') || '[]');
+    list.push({
+      name: name.value.trim(), phone: phone.value.trim(),
+      company: form.company.value.trim(), guests: form.guests.value,
+      note: form.note.value.trim(), at: new Date().toISOString()
+    });
+    localStorage.setItem('moutai_rsvps', JSON.stringify(list));
+  } catch(_) {}
+  form.style.display = 'none';
+  document.querySelector('.form .hint').style.display = 'none';
+  document.getElementById('success').classList.add('show');
+  document.getElementById('success').scrollIntoView({behavior:'smooth', block:'center'});
+});
+</script>
+</body>
+</html>
