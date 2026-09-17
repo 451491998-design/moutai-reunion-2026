@@ -87,9 +87,10 @@ body{
 .btn-ghost:hover{background:rgba(233,189,123,.15)}
 .scroll-hint{
   position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2;
-  display:grid; justify-items:center; gap:8px; color:#e6c690; font-size:12px; letter-spacing:.4em; text-indent:.4em;
+  display:grid; justify-items:center; gap:8px; color:#e6c690; font-size:12px;
   opacity:0; animation:rise 1s 1.4s ease forwards;
 }
+.scroll-hint .txt{letter-spacing:.4em; margin-right:-.4em; text-align:center}
 .scroll-hint::after{content:""; width:1px; height:42px; background:linear-gradient(var(--gold),transparent); animation:drop 1.8s ease-in-out infinite}
 #stars{position:absolute; inset:0; z-index:1; pointer-events:none}
 @keyframes rise{from{opacity:0; transform:translateY(26px)} to{opacity:1; transform:translateY(0)}}
@@ -254,7 +255,7 @@ button[type=submit]:disabled{opacity:.55; cursor:not-allowed; transform:none; bo
       <a class="btn-ghost" href="#invite">了解详情</a>
     </div>
   </div>
-  <div class="scroll-hint">向下滚动</div>
+  <div class="scroll-hint"><span class="txt">向下滚动</span></div>
 </header>
 
 <section class="bridge" id="invite">
